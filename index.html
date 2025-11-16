@@ -3,475 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- SEO 최적화: 검색 엔진에 노출되도록 메타 태그 설정 -->
-    <title>지렁이 키우기 게임 - 무료 온라인 게임 | Worm Growing Game</title>
-    <meta name="description" content="귀여운 지렁이를 키우는 재미있는 무료 온라인 게임입니다. 클릭하여 지렁이를 성장시키고 레벨업하세요!">
-    <meta name="keywords" content="지렁이 키우기, 지렁이 게임, 키우기 게임, 무료 게임, 온라인 게임, 브라우저 게임">
-    <meta name="author" content="Worm Game">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph 태그: 소셜 미디어 공유 최적화 -->
-    <meta property="og:title" content="지렁이 키우기 게임 - 무료 온라인 게임">
-    <meta property="og:description" content="귀여운 지렁이를 키우는 재미있는 무료 온라인 게임입니다.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://your-domain.com">
-    
-    <!-- 구조화된 데이터 (JSON-LD): 검색 엔진이 게임 정보를 이해하도록 -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Game",
-        "name": "지렁이 키우기 게임",
-        "description": "귀여운 지렁이를 키우는 재미있는 무료 온라인 게임",
-        "gamePlatform": "Web Browser",
-        "applicationCategory": "Game",
-        "operatingSystem": "Any",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "KRW"
-        }
-    }
-    </script>
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .game-container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-        }
-
-        h1 {
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 2.5em;
-        }
-
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 1.1em;
-        }
-
-        /* 지렁이 표시 영역 */
-        .worm-container {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            border-radius: 15px;
-            padding: 40px 20px;
-            margin-bottom: 30px;
-            min-height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .worm {
-            font-size: 4em;
-            transition: transform 0.3s ease, font-size 0.3s ease;
-            cursor: pointer;
-            user-select: none;
-            animation: wiggle 2s ease-in-out infinite;
-        }
-
-        .worm:hover {
-            transform: scale(1.1);
-        }
-
-        .worm.clicked {
-            animation: bounce 0.5s ease;
-        }
-
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-5deg); }
-            75% { transform: rotate(5deg); }
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.3); }
-        }
-
-        /* 게임 정보 패널 */
-        .stats-panel {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: #f5f5f5;
-            padding: 20px;
-            border-radius: 10px;
-            border: 2px solid #e0e0e0;
-        }
-
-        .stat-label {
-            font-size: 0.9em;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .stat-value {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        /* 경험치 바 */
-        .exp-bar-container {
-            background: #e0e0e0;
-            border-radius: 10px;
-            height: 30px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .exp-bar {
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.5s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 0.9em;
-        }
-
-        /* 버튼 스타일 */
-        .action-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        button {
-            padding: 15px;
-            font-size: 1.1em;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            font-weight: bold;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        button.secondary {
-            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
-        }
-
-        button.danger {
-            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
-        }
-
-        /* 메시지 표시 */
-        .message {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 1em;
-            min-height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #e3f2fd;
-            color: #1976d2;
-        }
-
-        .message.level-up {
-            background: #c8e6c9;
-            color: #2e7d32;
-            animation: levelUpAnimation 0.5s ease;
-        }
-
-        @keyframes levelUpAnimation {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        /* 반응형 디자인 */
-        @media (max-width: 600px) {
-            .game-container {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 2em;
-            }
-
-            .worm {
-                font-size: 3em;
-            }
-
-            .stats-panel {
-                grid-template-columns: 1fr;
-            }
-
-            .action-buttons {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <title>원숭이 족치기 게임</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐵</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="game-container">
-        <h1>🐛 지렁이 키우기 게임</h1>
-        <p class="subtitle">지렁이를 클릭하거나 버튼을 눌러서 키워보세요!</p>
-        
-        <!-- 지렁이 표시 영역 -->
-        <div class="worm-container">
-            <div class="worm" id="worm" onclick="feedWorm()">🐛</div>
+        <!-- 게임 타이틀 -->
+        <div class="game-title">
+            <h1><img src="{{ url_for('static', filename='images/monkey.png') }}" alt="🐵" class="title-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"><span style="display:none">🐵</span> 원숭이 족치기 게임 <img src="{{ url_for('static', filename='images/monkey.png') }}" alt="🐵" class="title-icon" onerror="this.style.display='none'; this.previousElementSibling.style.display='inline'"><span style="display:none">🐵</span></h1>
+            <p class="game-subtitle">원숭이를 때려서 돈을 벌어보세요!</p>
         </div>
 
-        <!-- 경험치 바 -->
-        <div class="exp-bar-container">
-            <div class="exp-bar" id="expBar" style="width: 0%;">EXP: 0 / 100</div>
+        <!-- 헤더 버튼 -->
+        <div class="header-buttons">
+            <button id="help-btn" class="header-btn" title="도움말"><img src="{{ url_for('static', filename='images/help.png') }}" alt="❓" class="btn-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"><span style="display:none">❓</span></button>
+            <button id="achievements-btn" class="header-btn" title="업적"><img src="{{ url_for('static', filename='images/trophy.png') }}" alt="🏆" class="btn-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"><span style="display:none">🏆</span></button>
+            <button id="sound-toggle" class="header-btn sound-on" title="사운드 끄기/켜기"><img src="{{ url_for('static', filename='images/sound-on.png') }}" alt="🔊" class="btn-icon" id="sound-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"><span style="display:none">🔊</span></button>
         </div>
 
-        <!-- 게임 통계 -->
-        <div class="stats-panel">
-            <div class="stat-card">
-                <div class="stat-label">레벨</div>
-                <div class="stat-value" id="level">1</div>
+        <!-- 게임 헤더 -->
+        <header class="game-header">
+            <div class="money-display">
+                <img src="{{ url_for('static', filename='images/money.png') }}" alt="💰" class="money-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"><span style="display:none">💰</span>
+                <span id="money">0</span>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">경험치</div>
-                <div class="stat-value" id="exp">0</div>
+            <div class="damage-display">
+                데미지: <span id="damage">1</span>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">클릭 횟수</div>
-                <div class="stat-value" id="clicks">0</div>
+            <div class="combo-display">
+                콤보: <span id="combo">0</span>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">총 경험치</div>
-                <div class="stat-value" id="totalExp">0</div>
+            <div class="stats-display">
+                클릭: <span id="total-clicks">0</span>
+            </div>
+            <div class="multiplier-display" id="multiplier-display" style="display: none;">
+                <span class="multiplier-text"><img src="{{ url_for('static', filename='images/fire.png') }}" alt="🔥" class="inline-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"><span style="display:none">🔥</span> 1.5배 보너스! <img src="{{ url_for('static', filename='images/fire.png') }}" alt="🔥" class="inline-icon" onerror="this.style.display='none'; this.previousElementSibling.style.display='inline'"><span style="display:none">🔥</span></span>
+                <span id="multiplier-timer">15</span>초
+            </div>
+        </header>
+
+        <!-- 메인 게임 영역 -->
+        <main class="game-main">
+            <!-- 원숭이 영역 -->
+            <div class="monkey-container">
+                <div id="monkey" class="monkey">
+                    <div class="monkey-face"><img src="{{ url_for('static', filename='images/monkey.png') }}" alt="🐵" id="monkey-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"><span style="display:none; font-size:150px;">🐵</span></div>
+                    <div class="monkey-expression" id="monkey-expression"></div>
+                </div>
+                <div id="damage-text" class="damage-text"></div>
+                <div class="particles-container" id="particles-container"></div>
+            </div>
+
+            <!-- 도구 선택 영역 -->
+            <div class="tools-section">
+                <h2>도구 선택</h2>
+                <div id="tools-list" class="tools-list">
+                    <!-- JavaScript로 동적으로 생성 -->
+                </div>
+            </div>
+        </main>
+
+        <!-- 상점 탭 -->
+        <aside class="shop-section" id="shop-section">
+            <div class="shop-header">
+                <h2><img src="{{ url_for('static', filename='images/shop.png') }}" alt="🏪" class="inline-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"><span style="display:none">🏪</span> 상점</h2>
+                <button id="close-shop" class="close-btn">✕</button>
+            </div>
+            <div id="shop-items" class="shop-items">
+                <!-- JavaScript로 동적으로 생성 -->
+            </div>
+        </aside>
+
+        <!-- 상점 열기 버튼 -->
+        <button id="open-shop" class="shop-btn"><img src="{{ url_for('static', filename='images/shop.png') }}" alt="🏪" class="btn-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"><span style="display:none">🏪</span> 상점 열기</button>
+
+        <!-- 획득 돈 표시 -->
+        <div id="earned-popup" class="earned-popup"></div>
+
+        <!-- 튜토리얼 모달 -->
+        <div class="modal-overlay" id="tutorial-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><img src="{{ url_for('static', filename='images/gamepad.png') }}" alt="🎮" class="inline-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"><span style="display:none">🎮</span> 게임 방법</h2>
+                    <button class="modal-close" id="close-tutorial">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="tutorial-item">
+                        <h3><img src="{{ url_for('static', filename='images/monkey.png') }}" alt="🐵" class="inline-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"><span style="display:none">🐵</span> 기본 플레이</h3>
+                        <p>화면의 원숭이를 클릭하여 돈을 벌 수 있습니다.</p>
+                    </div>
+                    <div class="tutorial-item">
+                        <h3><img src="{{ url_for('static', filename='images/tool.png') }}" alt="🛠️" class="inline-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"><span style="display:none">🛠️</span> 도구 업그레이드</h3>
+                        <p>상점에서 더 강력한 도구를 구매하면 더 많은 데미지를 줄 수 있습니다.</p>
+                    </div>
+                    <div class="tutorial-item">
+                        <h3><img src="{{ url_for('static', filename='images/fire.png') }}" alt="🔥" class="inline-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"><span style="display:none">🔥</span> 콤보 시스템</h3>
+                        <p>3초 이내에 20번 연속 클릭하면 15초 동안 1.5배 보너스를 받습니다!</p>
+                    </div>
+                    <div class="tutorial-item">
+                        <h3><img src="{{ url_for('static', filename='images/save.png') }}" alt="💾" class="inline-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"><span style="display:none">💾</span> 게임 저장</h3>
+                        <p>게임 진행 상황은 자동으로 저장됩니다. 페이지를 새로고침해도 이어서 플레이할 수 있습니다.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn" id="start-game">게임 시작!</button>
+                </div>
             </div>
         </div>
 
-        <!-- 액션 버튼 -->
-        <div class="action-buttons">
-            <button onclick="feedWorm()">🍎 먹이주기</button>
-            <button onclick="autoFeed()" class="secondary" id="autoBtn">자동 먹이주기</button>
+        <!-- 업적 모달 -->
+        <div class="modal-overlay" id="achievements-modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><img src="{{ url_for('static', filename='images/trophy.png') }}" alt="🏆" class="inline-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"><span style="display:none">🏆</span> 업적</h2>
+                    <button class="modal-close" id="close-achievements">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div id="achievements-list" class="achievements-list">
+                        <!-- JavaScript로 동적으로 생성 -->
+                    </div>
+                </div>
+            </div>
         </div>
-        <button onclick="resetGame()" class="danger">🔄 게임 초기화</button>
 
-        <div id="message" class="message">지렁이를 클릭하거나 버튼을 눌러서 키워보세요!</div>
+        <!-- 업적 알림 -->
+        <div id="achievement-popup" class="achievement-popup"></div>
     </div>
 
-    <script>
-        // 게임 상태 객체
-        let gameState = {
-            level: 1,
-            exp: 0,
-            clicks: 0,
-            totalExp: 0,
-            autoFeedActive: false,
-            autoFeedInterval: null
-        };
-
-        // 필요한 경험치 계산 함수 (레벨이 올라갈수록 더 많은 경험치 필요)
-        function getExpNeeded(level) {
-            return Math.floor(100 * Math.pow(1.5, level - 1));
-        }
-
-        // 로컬 스토리지에서 게임 데이터 불러오기
-        function loadGame() {
-            const saved = localStorage.getItem('wormGame');
-            if (saved) {
-                const data = JSON.parse(saved);
-                gameState.level = data.level || 1;
-                gameState.exp = data.exp || 0;
-                gameState.clicks = data.clicks || 0;
-                gameState.totalExp = data.totalExp || 0;
-                updateDisplay();
-                showMessage('게임 데이터를 불러왔습니다!', 'info');
-            }
-        }
-
-        // 게임 데이터를 로컬 스토리지에 저장
-        function saveGame() {
-            localStorage.setItem('wormGame', JSON.stringify({
-                level: gameState.level,
-                exp: gameState.exp,
-                clicks: gameState.clicks,
-                totalExp: gameState.totalExp,
-                saveTime: new Date().toISOString()
-            }));
-        }
-
-        // 지렁이에게 먹이주기
-        function feedWorm() {
-            // 클릭 애니메이션
-            const worm = document.getElementById('worm');
-            worm.classList.add('clicked');
-            setTimeout(() => worm.classList.remove('clicked'), 500);
-
-            // 경험치 증가 (레벨에 따라 증가량 조정)
-            const expGain = Math.floor(10 + gameState.level * 2);
-            gameState.exp += expGain;
-            gameState.clicks++;
-            gameState.totalExp += expGain;
-
-            // 레벨업 체크
-            const expNeeded = getExpNeeded(gameState.level);
-            if (gameState.exp >= expNeeded) {
-                levelUp();
-            }
-
-            updateDisplay();
-            saveGame();
-            showMessage(`+${expGain} 경험치를 얻었습니다!`, 'info');
-        }
-
-        // 레벨업 처리
-        function levelUp() {
-            const expNeeded = getExpNeeded(gameState.level);
-            gameState.exp -= expNeeded;
-            gameState.level++;
-            
-            // 지렁이 크기 증가 (시각적 효과)
-            const worm = document.getElementById('worm');
-            const currentSize = parseFloat(getComputedStyle(worm).fontSize);
-            worm.style.fontSize = (currentSize + 5) + 'px';
-
-            showMessage(`🎉 레벨업! 레벨 ${gameState.level}이 되었습니다!`, 'level-up');
-            
-            // 레벨업 후에도 경험치가 남아있으면 다시 체크
-            const newExpNeeded = getExpNeeded(gameState.level);
-            if (gameState.exp >= newExpNeeded) {
-                levelUp();
-            }
-        }
-
-        // 자동 먹이주기 기능
-        function autoFeed() {
-            if (gameState.autoFeedActive) {
-                // 자동 먹이주기 중지
-                clearInterval(gameState.autoFeedInterval);
-                gameState.autoFeedActive = false;
-                document.getElementById('autoBtn').textContent = '자동 먹이주기';
-                showMessage('자동 먹이주기가 중지되었습니다.', 'info');
-            } else {
-                // 자동 먹이주기 시작 (3초마다)
-                gameState.autoFeedActive = true;
-                gameState.autoFeedInterval = setInterval(() => {
-                    feedWorm();
-                }, 3000);
-                document.getElementById('autoBtn').textContent = '자동 먹이주기 중지';
-                showMessage('자동 먹이주기가 시작되었습니다!', 'info');
-            }
-        }
-
-        // 게임 초기화
-        function resetGame() {
-            if (confirm('정말로 게임을 초기화하시겠습니까? 모든 진행 상황이 사라집니다.')) {
-                gameState = {
-                    level: 1,
-                    exp: 0,
-                    clicks: 0,
-                    totalExp: 0,
-                    autoFeedActive: false,
-                    autoFeedInterval: null
-                };
-                
-                if (gameState.autoFeedInterval) {
-                    clearInterval(gameState.autoFeedInterval);
-                }
-                
-                localStorage.removeItem('wormGame');
-                const worm = document.getElementById('worm');
-                worm.style.fontSize = '4em';
-                
-                updateDisplay();
-                showMessage('게임이 초기화되었습니다.', 'info');
-            }
-        }
-
-        // 화면 업데이트
-        function updateDisplay() {
-            document.getElementById('level').textContent = gameState.level;
-            document.getElementById('exp').textContent = gameState.exp;
-            document.getElementById('clicks').textContent = gameState.clicks.toLocaleString();
-            document.getElementById('totalExp').textContent = gameState.totalExp.toLocaleString();
-
-            // 경험치 바 업데이트
-            const expNeeded = getExpNeeded(gameState.level);
-            const expPercent = (gameState.exp / expNeeded) * 100;
-            const expBar = document.getElementById('expBar');
-            expBar.style.width = expPercent + '%';
-            expBar.textContent = `EXP: ${gameState.exp} / ${expNeeded}`;
-        }
-
-        // 메시지 표시
-        function showMessage(text, type = 'info') {
-            const messageDiv = document.getElementById('message');
-            messageDiv.textContent = text;
-            messageDiv.className = 'message';
-            if (type === 'level-up') {
-                messageDiv.classList.add('level-up');
-            }
-            
-            // 3초 후 메시지 초기화
-            setTimeout(() => {
-                if (messageDiv.textContent === text) {
-                    messageDiv.textContent = '지렁이를 키워보세요!';
-                    messageDiv.className = 'message';
-                }
-            }, 3000);
-        }
-
-        // 페이지 로드 시 게임 데이터 불러오기
-        window.addEventListener('load', () => {
-            loadGame();
-        });
-
-        // 페이지를 떠날 때 자동 저장
-        window.addEventListener('beforeunload', () => {
-            saveGame();
-        });
-
-        // 주기적으로 자동 저장 (30초마다)
-        setInterval(() => {
-            saveGame();
-        }, 30000);
-    </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
+
