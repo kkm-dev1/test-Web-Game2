@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO 최적화: 검색 엔진에 노출되도록 메타 태그 설정 -->
+    <title>지렁이 키우기 게임 - 무료 온라인 게임 | Worm Growing Game</title>
+    <meta name="description" content="귀여운 지렁이를 키우는 재미있는 무료 온라인 게임입니다. 클릭하여 지렁이를 성장시키고 레벨업하세요!">
+    <meta name="keywords" content="지렁이 키우기, 지렁이 게임, 키우기 게임, 무료 게임, 온라인 게임, 브라우저 게임">
+    <meta name="author" content="Worm Game">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph 태그: 소셜 미디어 공유 최적화 -->
+    <meta property="og:title" content="지렁이 키우기 게임 - 무료 온라인 게임">
+    <meta property="og:description" content="귀여운 지렁이를 키우는 재미있는 무료 온라인 게임입니다.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com">
+    
+    <!-- 구조화된 데이터 (JSON-LD): 검색 엔진이 게임 정보를 이해하도록 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Game",
+        "name": "지렁이 키우기 게임",
+        "description": "귀여운 지렁이를 키우는 재미있는 무료 온라인 게임",
+        "gamePlatform": "Web Browser",
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "KRW"
+        }
+    }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        /* 지렁이 표시 영역 */
+        .worm-container {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .worm {
+            font-size: 4em;
+            transition: transform 0.3s ease, font-size 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+            animation: wiggle 2s ease-in-out infinite;
+        }
+
+        .worm:hover {
+            transform: scale(1.1);
+        }
+
+        .worm.clicked {
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        /* 게임 정보 패널 */
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        /* 경험치 바 */
+        .exp-bar-container {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 30px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .exp-bar {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        /* 버튼 스타일 */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 15px;
+            font-size: 1.1em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+        }
+
+        button.danger {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+        }
+
+        /* 메시지 표시 */
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1em;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .message.level-up {
+            background: #c8e6c9;
+            color: #2e7d32;
+            animation: levelUpAnimation 0.5s ease;
+        }
+
+        @keyframes levelUpAnimation {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 600px) {
+            .game-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .worm {
+                font-size: 3em;
+            }
+
+            .stats-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>🐛 지렁이 키우기 게임</h1>
+        <p class="subtitle">지렁이를 클릭하거나 버튼을 눌러서 키워보세요!</p>
+        
+        <!-- 지렁이 표시 영역 -->
+        <div class="worm-container">
+            <div class="worm" id="worm" onclick="feedWorm()">🐛</div>
+        </div>
+
+        <!-- 경험치 바 -->
+        <div class="exp-bar-container">
+            <div class="exp-bar" id="expBar" style="width: 0%;">EXP: 0 / 100</div>
+        </div>
+
+        <!-- 게임 통계 -->
+        <div class="stats-panel">
+            <div class="stat-card">
+                <div class="stat-label">레벨</div>
+                <div class="stat-value" id="level">1</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">경험치</div>
+                <div class="stat-value" id="exp">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">클릭 횟수</div>
+                <div class="stat-value" id="clicks">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">총 경험치</div>
+                <div class="stat-value" id="totalExp">0</div>
+            </div>
+        </div>
+
+        <!-- 액션 버튼 -->
+        <div class="action-buttons">
+            <button onclick="feedWorm()">🍎 먹이주기</button>
+            <button onclick="autoFeed()" class="secondary" id="autoBtn">자동 먹이주기</button>
+        </div>
+        <button onclick="resetGame()" class="danger">🔄 게임 초기화</button>
+
+        <div id="message" class="message">지렁이를 클릭하거나 버튼을 눌러서 키워보세요!</div>
+    </div>
+
+    <script>
+        // 게임 상태 객체
+        let gameState = {
+            level: 1,
+            exp: 0,
+            clicks: 0,
+            totalExp: 0,
+            autoFeedActive: false,
+            autoFeedInterval: null
+        };
+
+        // 필요한 경험치 계산 함수 (레벨이 올라갈수록 더 많은 경험치 필요)
+        function getExpNeeded(level) {
+            return Math.floor(100 * Math.pow(1.5, level - 1));
+        }
+
+        // 로컬 스토리지에서 게임 데이터 불러오기
+        function loadGame() {
+            const saved = localStorage.getItem('wormGame');
+            if (saved) {
+                const data = JSON.parse(saved);
+                gameState.level = data.level || 1;
+                gameState.exp = data.exp || 0;
+                gameState.clicks = data.clicks || 0;
+                gameState.totalExp = data.totalExp || 0;
+                updateDisplay();
+                showMessage('게임 데이터를 불러왔습니다!', 'info');
+            }
+        }
+
+        // 게임 데이터를 로컬 스토리지에 저장
+        function saveGame() {
+            localStorage.setItem('wormGame', JSON.stringify({
+                level: gameState.level,
+                exp: gameState.exp,
+                clicks: gameState.clicks,
+                totalExp: gameState.totalExp,
+                saveTime: new Date().toISOString()
+            }));
+        }
+
+        // 지렁이에게 먹이주기
+        function feedWorm() {
+            // 클릭 애니메이션
+            const worm = document.getElementById('worm');
+            worm.classList.add('clicked');
+            setTimeout(() => worm.classList.remove('clicked'), 500);
+
+            // 경험치 증가 (레벨에 따라 증가량 조정)
+            const expGain = Math.floor(10 + gameState.level * 2);
+            gameState.exp += expGain;
+            gameState.clicks++;
+            gameState.totalExp += expGain;
+
+            // 레벨업 체크
+            const expNeeded = getExpNeeded(gameState.level);
+            if (gameState.exp >= expNeeded) {
+                levelUp();
+            }
+
+            updateDisplay();
+            saveGame();
+            showMessage(`+${expGain} 경험치를 얻었습니다!`, 'info');
+        }
+
+        // 레벨업 처리
+        function levelUp() {
+            const expNeeded = getExpNeeded(gameState.level);
+            gameState.exp -= expNeeded;
+            gameState.level++;
+            
+            // 지렁이 크기 증가 (시각적 효과)
+            const worm = document.getElementById('worm');
+            const currentSize = parseFloat(getComputedStyle(worm).fontSize);
+            worm.style.fontSize = (currentSize + 5) + 'px';
+
+            showMessage(`🎉 레벨업! 레벨 ${gameState.level}이 되었습니다!`, 'level-up');
+            
+            // 레벨업 후에도 경험치가 남아있으면 다시 체크
+            const newExpNeeded = getExpNeeded(gameState.level);
+            if (gameState.exp >= newExpNeeded) {
+                levelUp();
+            }
+        }
+
+        // 자동 먹이주기 기능
+        function autoFeed() {
+            if (gameState.autoFeedActive) {
+                // 자동 먹이주기 중지
+                clearInterval(gameState.autoFeedInterval);
+                gameState.autoFeedActive = false;
+                document.getElementById('autoBtn').textContent = '자동 먹이주기';
+                showMessage('자동 먹이주기가 중지되었습니다.', 'info');
+            } else {
+                // 자동 먹이주기 시작 (3초마다)
+                gameState.autoFeedActive = true;
+                gameState.autoFeedInterval = setInterval(() => {
+                    feedWorm();
+                }, 3000);
+                document.getElementById('autoBtn').textContent = '자동 먹이주기 중지';
+                showMessage('자동 먹이주기가 시작되었습니다!', 'info');
+            }
+        }
+
+        // 게임 초기화
+        function resetGame() {
+            if (confirm('정말로 게임을 초기화하시겠습니까? 모든 진행 상황이 사라집니다.')) {
+                gameState = {
+                    level: 1,
+                    exp: 0,
+                    clicks: 0,
+                    totalExp: 0,
+                    autoFeedActive: false,
+                    autoFeedInterval: null
+                };
+                
+                if (gameState.autoFeedInterval) {
+                    clearInterval(gameState.autoFeedInterval);
+                }
+                
+                localStorage.removeItem('wormGame');
+                const worm = document.getElementById('worm');
+                worm.style.fontSize = '4em';
+                
+                updateDisplay();
+                showMessage('게임이 초기화되었습니다.', 'info');
+            }
+        }
+
+        // 화면 업데이트
+        function updateDisplay() {
+            document.getElementById('level').textContent = gameState.level;
+            document.getElementById('exp').textContent = gameState.exp;
+            document.getElementById('clicks').textContent = gameState.clicks.toLocaleString();
+            document.getElementById('totalExp').textContent = gameState.totalExp.toLocaleString();
+
+            // 경험치 바 업데이트
+            const expNeeded = getExpNeeded(gameState.level);
+            const expPercent = (gameState.exp / expNeeded) * 100;
+            const expBar = document.getElementById('expBar');
+            expBar.style.width = expPercent + '%';
+            expBar.textContent = `EXP: ${gameState.exp} / ${expNeeded}`;
+        }
+
+        // 메시지 표시
+        function showMessage(text, type = 'info') {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = 'message';
+            if (type === 'level-up') {
+                messageDiv.classList.add('level-up');
+            }
+            
+            // 3초 후 메시지 초기화
+            setTimeout(() => {
+                if (messageDiv.textContent === text) {
+                    messageDiv.textContent = '지렁이를 키워보세요!';
+                    messageDiv.className = 'message';
+                }
+            }, 3000);
+        }
+
+        // 페이지 로드 시 게임 데이터 불러오기
+        window.addEventListener('load', () => {
+            loadGame();
+        });
+
+        // 페이지를 떠날 때 자동 저장
+        window.addEventListener('beforeunload', () => {
+            saveGame();
+        });
+
+        // 주기적으로 자동 저장 (30초마다)
+        setInterval(() => {
+            saveGame();
+        }, 30000);
+    </script>
+</body>
+</html>
